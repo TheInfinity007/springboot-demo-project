@@ -5,3 +5,6 @@
 *.DS_Store
 
 !.mvn/wrapper/maven-wrapper.jar
+
+# Maven
+target
