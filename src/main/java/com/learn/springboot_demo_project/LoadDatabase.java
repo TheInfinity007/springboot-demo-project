@@ -11,7 +11,7 @@ public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(EmployeeRepository repository) {
+    CommandLineRunner initDatabase(EmployeeRepository employeeRepository, OrderRepository orderRepository) {
 
         System.out.println("Initializing Database with feed data");
         /*
@@ -29,9 +29,18 @@ public class LoadDatabase {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                Employee result = repository.save(new Employee("Bilbo", "Baggins", "Bulglar"));
+                Employee result = employeeRepository.save(new Employee("Bilbo", "Baggins", "Bulglar"));
                 log.info("Preloading " + result);
-                log.info("Preloading " + repository.save(new Employee("Frodo", "Baggins", "Thief")).toString());
+                log.info("Preloading " + employeeRepository.save(new Employee("Frodo", "Baggins", "Thief")).toString());
+
+
+                // Create order data
+                orderRepository.save(new Order("Macbook M3 Pro", Status.COMPLETED));
+                orderRepository.save(new Order("iPhone 16", Status.IN_PROGRESS));
+                orderRepository.save(new Order("Back to Office", Status.CANCELLED));
+
+                orderRepository.findAll().forEach((order) -> log.info("Preloaded " + order));
+
             }
         };
 
