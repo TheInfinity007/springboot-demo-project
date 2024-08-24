@@ -56,7 +56,7 @@ public class Employee {
         if (!(o instanceof Employee employee)) {
             return false;
         }
-        
+
         return employee.id.equals(this.id) && employee.name.equals(this.name) && employee.role.equals(this.role);
     }
 
@@ -67,6 +67,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{id=" + this.id + ", name='" + this.name + "',role='" + this.role + "'}";
+        return "Employee{ id=" + this.id + ", name='" + this.name + "', role='" + this.role + "' }";
     }
 }
