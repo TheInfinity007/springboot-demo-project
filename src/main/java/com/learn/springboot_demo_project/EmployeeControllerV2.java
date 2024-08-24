@@ -17,9 +17,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class EmployeeControllerV2 {
 
     private EmployeeRepository repository;
+    private EmployeeModelAssembler assembler;
 
-    EmployeeControllerV2(EmployeeRepository repository) {
+    EmployeeControllerV2(EmployeeRepository repository, EmployeeModelAssembler assembler) {
         this.repository = repository;
+        this.assembler = assembler;
     }
 
 
@@ -29,16 +31,17 @@ public class EmployeeControllerV2 {
         List<Employee> employees = repository.findAll();
 
         List<EntityModel<Employee>> mappedEmployee = employees.stream().map(employee ->
-                EntityModel.of(employee,
-                        linkTo(
-                                methodOn(EmployeeControllerV2.class)
-                                        .one(employee.getId())
-                        ).withSelfRel(),
-                        linkTo(
-                                methodOn(EmployeeControllerV2.class)
-                                        .all()
-                        ).withRel("employees")
-                )
+                        assembler.toModel(employee)
+//                EntityModel.of(employee,
+//                        linkTo(
+//                                methodOn(EmployeeControllerV2.class)
+//                                        .one(employee.getId())
+//                        ).withSelfRel(),
+//                        linkTo(
+//                                methodOn(EmployeeControllerV2.class)
+//                                        .all()
+//                        ).withRel("employees")
+//                )
         ).collect(Collectors.toList());
 
         return CollectionModel.of(
@@ -63,16 +66,18 @@ public class EmployeeControllerV2 {
                     return new EmployeeNotFoundException(id);
                 });
 
-        return EntityModel.of(employee,
-                linkTo(
-                        methodOn(EmployeeControllerV2.class)
-                                .one(id)
-                ).withSelfRel(),
-                linkTo(
-                        methodOn(EmployeeControllerV2.class)
-                                .all()
-                ).withRel("employees")
-        );
+        return assembler.toModel(employee);
+
+//        EntityModel.of(employee,
+//                linkTo(
+//                        methodOn(EmployeeControllerV2.class)
+//                                .one(id)
+//                ).withSelfRel(),
+//                linkTo(
+//                        methodOn(EmployeeControllerV2.class)
+//                                .all()
+//                ).withRel("employees")
+//        );
     }
 
     // Update employee
