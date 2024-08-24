@@ -3,6 +3,8 @@ package com.learn.springboot_demo_project;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,9 +56,15 @@ public class EmployeeControllerV2 {
     }
 
     @PostMapping("/employees")
-    Employee create(@RequestBody Employee newEmployee) {
-        return repository.save(newEmployee);
-    }
+    ResponseEntity<?> create(@RequestBody Employee newEmployee) {
+        Employee employee = repository.save(newEmployee);
+
+        EntityModel<Employee> data = assembler.toModel(employee);
+
+        // ResponseEntity is used to create an HTTP 201 Created Response Status message.
+        // created will a location response header
+        return ResponseEntity.created(data.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(data);
+    }x
 
     @GetMapping("/employees/{id}")
     EntityModel<Employee> one(@PathVariable Long id) {

@@ -29,9 +29,9 @@ public class LoadDatabase {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                Employee result = repository.save(new Employee("Bilbo Baggins", "Bulglar"));
+                Employee result = repository.save(new Employee("Bilbo", "Baggins", "Bulglar"));
                 log.info("Preloading " + result);
-                log.info("Preloading " + repository.save(new Employee("Frodo Baggins", "Thief")).toString());
+                log.info("Preloading " + repository.save(new Employee("Frodo", "Baggins", "Thief")).toString());
             }
         };
 
