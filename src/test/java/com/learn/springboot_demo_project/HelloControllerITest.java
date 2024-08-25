@@ -14,6 +14,7 @@ public class HelloControllerITest {
     @Autowired
     TestRestTemplate template;
 
+//    Getting error with the TestRestTemplate passing in constructor
 //    HelloControllerITest(TestRestTemplate template) {
 //        this.template = template;
 //    }
