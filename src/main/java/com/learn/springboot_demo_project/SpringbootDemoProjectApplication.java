@@ -29,9 +29,11 @@ public class SpringbootDemoProjectApplication {
 
                 Arrays.sort(beanNames);
 
-                for (String bean : beanNames) {
-                    System.out.println(bean);
-                }
+//                for (String bean : beanNames) {
+//                    System.out.print(bean + ", ");
+//                }
+
+                System.out.println();
             }
         };
     }
