@@ -52,6 +52,7 @@ public class GithubUserController {
 
 //        userFuture.join();// Wait for the CompletableFuture to complete (for demonstration purposes)
 
+        // Similar to Promise.all(promise1, promise2);
         CompletableFuture.allOf(userFuture, userFuture2).join(); // block the current thread until the Completable future conpletes
 
         System.out.println("Elapsed time6: " + (System.currentTimeMillis() - start) + " Thread: " + Thread.currentThread().getName());
